@@ -90,7 +90,7 @@ bool checkYearMonth() {
 }
 
 bool checkPesel() {
-    if(pesel.length() == 11) //checking PESEL length (11 digits)
+    if(pesel.length() == 11) //checking PESEL length (should be 11 digits)
     {
         string p5, p6;
         p5 = pesel[4];
@@ -132,14 +132,15 @@ void checkAge() {
     }
 }
 
-bool validation() {
+bool validate() {
     int digits[11];
 
+    // convert string to int array in order to perform calculations on PESEL number
     for(int i = 0; i < 11; i++) {
-        digits[i] = (int)pesel[i] - 48;
+        digits[i] = (int) pesel[i] - 48;
     }
 
-    if((pesel[0] + 3*pesel[1] + 7*pesel[2] + 9*pesel[3] + pesel[4] + 3*pesel[5] + 7*pesel[6] + 9*pesel[7] + pesel[8] + 3*pesel[9] + pesel[10])%10 == 0)
+    if((digits[0] + 3*digits[1] + 7*digits[2] + 9*digits[3] + digits[4] + 3*digits[5] + 7*digits[6] + 9*digits[7] + digits[8] + 3*digits[9] + digits[10]) % 10 == 0)
 	{
 		return true;
 	}
@@ -149,16 +150,12 @@ bool validation() {
 	}
 }
 
-void menu() {
-    cout<<"Podaj numer PESEL: ";
-    cin>>pesel;
-}
-
 int main() {
     system("chcp 65001 >nul"); //utf-8 characters in cmd
 
     while(true) {
-        menu();
+        cout<<"Podaj numer PESEL: ";
+        cin>>pesel;
 
         if(checkPesel() == true) //if PESEL is correct
         {
@@ -183,7 +180,7 @@ int main() {
                 cout<<"Wiek (ukończony): "<<age<<endl;
             }
 
-            if(validation() == true)
+            if(validate() == true)
             {
                 cout<<"Weryfikacja PESEL-u: poprawny\n";
             }
@@ -200,8 +197,7 @@ int main() {
         cout<<"\n\n";
     }
 
-
-    
     getch();
+
     return 0;
 }
